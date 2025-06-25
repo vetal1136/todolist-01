@@ -21,7 +21,6 @@ export const App = () => {
         {id: v1(), title: 'ReactJS', isDone: false},
         {id: v1(), title: 'Typescript', isDone: false},
         {id: v1(), title: 'RTK query', isDone: false},
-        {id: v1(), title: 'RTK query', isDone: false},
     ])
 
 
