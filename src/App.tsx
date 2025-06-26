@@ -3,6 +3,7 @@ import {TodolistItem} from "./TodolistItem.tsx";
 import {useState} from "react";
 import {v1} from "uuid";
 
+
 export type TaskType = {
     id: string
     title: string
@@ -13,6 +14,10 @@ export type Todolist = {
     id: string
     title: string
     filter: FilterValues
+}
+
+export type TasksState = {
+    [key: string]: TaskType[]
 }
 
 export type FilterValues = 'all' | 'active' | 'completed'
@@ -27,7 +32,7 @@ export const App = () => {
         { id: todolistId2, title: 'What to buy', filter: 'all' },
     ])
 
-    const [tasks, setTasks] = useState({
+    const [tasks, setTasks] = useState<TasksState>({
         [todolistId1]: [
             { id: v1(), title: 'HTML&CSS', isDone: true },
             { id: v1(), title: 'JS', isDone: true },
@@ -65,6 +70,8 @@ export const App = () => {
     }
     const deleteTodolist = (todolistId: string) => {
         setTodolists(todolists.filter(todolist => todolist.id !== todolistId))
+        delete tasks[todolistId]
+        setTasks({ ...tasks })
     }
 
     return (
