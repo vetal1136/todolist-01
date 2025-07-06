@@ -41,6 +41,9 @@ export const App = () => {
         [todolistId2]: [
             { id: v1(), title: 'Rest API', isDone: true },
             { id: v1(), title: 'GraphQL', isDone: false },
+            { id: v1(), title: 'GraphQL', isDone: false },
+            { id: v1(), title: 'GraphQL', isDone: false },
+            { id: v1(), title: 'GraphQL', isDone: false },
         ],
     })
 
@@ -50,7 +53,7 @@ export const App = () => {
     }
 
 
-    const changeFilter = (todolistsId: string, filter: FilterValues) => {
+    const changeTodolistFilter = (todolistsId: string, filter: FilterValues) => {
         const newTodolists = todolists.map(todolist => {
             return(
                 todolist.id === todolistsId ? {...todolist, filter} : todolist
@@ -68,6 +71,16 @@ export const App = () => {
     const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(task => task.id == taskId ? { ...task, isDone } : task)})
     }
+
+    const changeTaskTitle = () => {
+
+    }
+
+    const createTodolist = () => {
+
+    }
+
+
     const deleteTodolist = (todolistId: string) => {
         setTodolists(todolists.filter(todolist => todolist.id !== todolistId))
         delete tasks[todolistId]
@@ -91,7 +104,7 @@ export const App = () => {
                                   todolist={todolist}
                                   tasks={filteredTasks}
                                   deleteTask={deleteTask}
-                                  changeFilter={changeFilter}
+                                  changeFilter={changeTodolistFilter}
                                   createTask={createTask}
                                   changeTaskStatus={changeTaskStatus}
                                   deleteTodolist={deleteTodolist}
