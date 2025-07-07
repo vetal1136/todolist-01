@@ -2,7 +2,7 @@ import {Button} from "./Button.tsx";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type CreateItemFormPropsType = {
-    createItem: (title: string) => void
+    createItem: (newTitle: string) => void
 }
 
 
