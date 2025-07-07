@@ -2,30 +2,30 @@ import {Button} from "./Button.tsx";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 type CreateItemFormPropsType = {
-    createTask: (title: string) => void
+    createItem: (title: string) => void
 }
 
 
-export const CreateItemForm = ({createTask}:CreateItemFormPropsType) => {
-    const [taskTitle, setTaskTitle] = useState('')
+export const CreateItemForm = ({createItem}:CreateItemFormPropsType) => {
+    const [itemTitle, setItemTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
-    const changeTaskTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setTaskTitle(event.currentTarget.value)
+    const changeItemTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setItemTitle(event.currentTarget.value)
         setError(null)
     }
 
-    const createTaskOnEnterHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+    const createItemOnEnterHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === 'Enter') {
-            createTaskHandler()
+            createItemHandler()
         }
     }
 
-    const createTaskHandler = () => {
-        const trimmedTitle = taskTitle.trim()
+    const createItemHandler = () => {
+        const trimmedTitle = itemTitle.trim()
         if (trimmedTitle !== '') {
-            createTask(trimmedTitle)
-            setTaskTitle('')
+            createItem(trimmedTitle)
+            setItemTitle('')
         } else {
             setError('Title is required')
         }
@@ -34,11 +34,11 @@ export const CreateItemForm = ({createTask}:CreateItemFormPropsType) => {
     return (
         <div>
             <input className={error ? 'error' : ''}
-                   value={taskTitle}
-                   onChange={changeTaskTitleHandler}
-                   onKeyDown={createTaskOnEnterHandler}
+                   value={itemTitle}
+                   onChange={changeItemTitleHandler}
+                   onKeyDown={createItemOnEnterHandler}
             />
-            <Button onClick={createTaskHandler} title={'+'}/>
+            <Button onClick={createItemHandler} title={'+'}/>
             {error && <div className={'error-message'}>{error}</div>}
         </div>
     );
