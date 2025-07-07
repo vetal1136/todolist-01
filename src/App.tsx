@@ -28,63 +28,71 @@ export const App = () => {
     const todolistId2 = v1()
 
     const [todolists, setTodolists] = useState<Todolist[]>([
-        { id: todolistId1, title: 'What to learn', filter: 'all' },
-        { id: todolistId2, title: 'What to buy', filter: 'all' },
+        {id: todolistId1, title: 'What to learn', filter: 'all'},
+        {id: todolistId2, title: 'What to buy', filter: 'all'},
     ])
 
     const [tasks, setTasks] = useState<TasksState>({
         [todolistId1]: [
-            { id: v1(), title: 'HTML&CSS', isDone: true },
-            { id: v1(), title: 'JS', isDone: true },
-            { id: v1(), title: 'ReactJS', isDone: false },
+            {id: v1(), title: 'HTML&CSS', isDone: true},
+            {id: v1(), title: 'JS', isDone: true},
+            {id: v1(), title: 'ReactJS', isDone: false},
         ],
         [todolistId2]: [
-            { id: v1(), title: 'Rest API', isDone: true },
-            { id: v1(), title: 'GraphQL', isDone: false },
-            { id: v1(), title: 'GraphQL', isDone: false },
-            { id: v1(), title: 'GraphQL', isDone: false },
-            { id: v1(), title: 'GraphQL', isDone: false },
+            {id: v1(), title: 'Rest API', isDone: true},
+            {id: v1(), title: 'GraphQL', isDone: false},
+            {id: v1(), title: 'GraphQL', isDone: false},
+            {id: v1(), title: 'GraphQL', isDone: false},
+            {id: v1(), title: 'GraphQL', isDone: false},
         ],
     })
 
 
     const deleteTask = (todolistId: string, taskId: string) => {
-        setTasks({ ...tasks, [todolistId]: tasks[todolistId].filter(task => task.id !== taskId) })
+        setTasks({...tasks, [todolistId]: tasks[todolistId].filter(task => task.id !== taskId)})
     }
 
 
+    const createTask = (todolistId: string, title: string) => {
+        const newTask = {id: v1(), title, isDone: false}
+        const newTasks = {...tasks, [todolistId]: [newTask, ...tasks[todolistId]]}
+        setTasks(newTasks)
+    }
+
+    const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(task => task.id == taskId ? {...task, isDone} : task)})
+    }
+
+    const changeTaskTitle = (todolistId: string, taskId: string, title: string) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(task => task.id == taskId ? {...task, title} : task)})
+    }
+
     const changeTodolistFilter = (todolistsId: string, filter: FilterValues) => {
         const newTodolists = todolists.map(todolist => {
-            return(
+            return (
                 todolist.id === todolistsId ? {...todolist, filter} : todolist
             )
         })
         setTodolists(newTodolists)
     }
-
-    const createTask = (todolistId: string, title: string) => {
-        const newTask = {id: v1(), title, isDone: false}
-        const newTasks = { ...tasks, [todolistId]: [newTask, ...tasks[todolistId]] }
-        setTasks(newTasks)
+    const createTodolist = (title: string) => {
+        const newTodolistId = v1()
+        const newTodolist: Todolist = {id: newTodolistId, title, filter: "all"}
+        const nextState: Todolist[] = [...todolists, newTodolist]
+        setTodolists(nextState)
+        const nextTasksState: TasksState = {...tasks, [newTodolistId]:[]}
+        setTasks(nextTasksState)
     }
 
-    const changeTaskStatus = (todolistId: string, taskId: string, isDone: boolean) => {
-        setTasks({...tasks, [todolistId]: tasks[todolistId].map(task => task.id == taskId ? { ...task, isDone } : task)})
-    }
-
-    const changeTaskTitle = () => {
-
-    }
-
-    const createTodolist = () => {
-
+    const changeTodolistTitle = (todolistsId: string, title: string) => {
+        setTodolists(todolists.map(todolists => todolists.id === todolistsId ? {...todolists, title} : todolists))
     }
 
 
     const deleteTodolist = (todolistId: string) => {
         setTodolists(todolists.filter(todolist => todolist.id !== todolistId))
         delete tasks[todolistId]
-        setTasks({ ...tasks })
+        setTasks({...tasks})
     }
 
     return (
