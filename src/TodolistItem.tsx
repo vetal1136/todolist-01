@@ -97,7 +97,7 @@ export const TodolistItem = (props: Props) => {
         )}
         <Box sx={containerSx}>
           <Button variant={filter === 'all' ? 'outlined' : 'text'}
-                  color={'success'}
+                  color={'inherit'}
                   onClick={() => changeFilterHandler('all')}>
             All
           </Button>
